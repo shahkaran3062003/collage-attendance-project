@@ -1,0 +1,237 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %} Attendance {{year}} {% endblock %}
+
+{% block current_title %} Attendance {% endblock %}
+
+{% block isAttendanceOpen %}
+<div x-data="{ isActive: true, open: true}">
+	{% endblock %}
+
+	{% block content %}
+	<div class="mt-2 h-full">
+		<div class="grid grid-cols-1 p-2 space-y-4 lg:gap-8 lg:space-y-0 lg:grid-cols-1 h-full overflow-y-auto">
+			<div class="col-span-1 bg-white rounded-md dark:bg-darker ">
+				<div class="items-center p-4 border-b dark:border-primary">
+					<div class="grid grid-cols-3 gap-8 lg:gap-1 lg:space-y-0 lg:grid-cols-3 md:grid-cols-3">
+						<div class="col-span-1 bg-white flex rounded-md dark:bg-darker">
+							<h5 class="text-lg font-semibold text-gray-500 dark:text-light">
+								{{year}}
+							</h5>
+							<a href="{% static '' %}{{file_path}}">
+								<button type="button"
+									class="px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker">
+									<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+										viewBox="0 0 512 512" stroke="currentColor">
+										<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)">
+											<path d="M2432 5099 c-71 -28 -144 -101 -171 -174 -21 -55 -21 -63 -21 -1318
+												l0 -1261 -308 306 c-356 355 -367 363 -507 363 -99 -1 -159 -26 -227 -92 -66
+												-65 -92 -128 -92 -228 -2 -149 -27 -118 662 -806 574 -574 610 -608 665 -628
+												38 -14 81 -21 127 -21 46 0 89 7 127 21 55 20 91 54 665 628 689 688 664 657
+												662 806 0 100 -26 163 -92 228 -68 66 -128 91 -227 92 -140 0 -151 -8 -507
+												-363 l-308 -306 0 1261 c0 1255 0 1263 -21 1318 -45 121 -161 195 -302 194
+												-47 0 -90 -7 -125 -20z" />
+											<path d="M192 619 c-32 -13 -71 -39 -101 -69 -160 -160 -103 -452 104 -529
+												l56 -21 2309 0 2309 0 56 21 c260 97 260 501 0 598 l-56 21 -2312 -1 c-2299 0
+												-2312 0 -2365 -20z" />
+										</g>
+									</svg>
+
+								</button>
+
+							</a>
+
+						</div>
+
+						<div class="col-span-1 rounded-md dark:bg-darker flex">
+							<form action="" method="post" class="w-full flex" id="filterAttendance">
+								{% csrf_token %}
+								<input type="text"
+									class="w-full px-4 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+									placeholder="Roll Number" name="RollNumber" />
+
+							</form>
+						</div>
+
+						<div class="col-span-1 rounded-md dark:bg-darker flex">
+							<input type="month"
+								class="w-full px-4 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+								name="Filter-Month" form="filterAttendance" id="Filter-Month" />
+							<button type="submit" form="filterAttendance"
+								class="px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker">
+								<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+									viewBox="0 0 512 512" stroke="currentColor">
+									<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)">
+										<path d="M1858 5104 c-341 -50 -678 -192 -963 -408 -104 -78 -304 -278 -384
+										-384 -124 -164 -256 -409 -315 -583 -311 -929 47 -1926 877 -2442 662 -410
+										1535 -405 2188 14 l76 49 125 -128 c69 -70 352 -364 630 -653 574 -597 548
+										-575 688 -567 85 5 123 21 176 75 52 52 77 114 77 193 0 98 -24 142 -151 273
+										-420 434 -1132 1177 -1132 1182 0 3 22 33 49 68 164 209 291 471 362 746 159
+										614 28 1255 -363 1774 -78 104 -279 305 -386 386 -288 218 -618 355 -974 406
+										-130 19 -448 18 -580 -1z m502 -545 c308 -38 607 -184 844 -409 476 -455 606
+										-1146 327 -1745 -128 -273 -356 -519 -626 -674 -387 -222 -857 -259 -1282
+										-102 -626 231 -1040 879 -983 1540 13 146 33 241 77 371 214 634 830 1060
+										1493 1032 36 -1 103 -7 150 -13z" />
+									</g>
+								</svg>
+							</button>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="overflow-y-auto overflow-x-auto" style=" width: auto;">
+					<table class="table-auto w-full font-semibold text-gray-500 dark:text-light text-left">
+						<thead class="text-sm font-semib uppercase bg-primary text-white"
+							style="position: sticky; top: 0; z-index: 1;">
+							<tr style="text-align:center;">
+								{% for key in attendace.0.keys %}
+								<th class="p-2">
+									<div class="text-left w-20">
+										{{key}}
+									</div>
+								</th>
+								{% endfor %}
+							</tr>
+						</thead>
+
+
+						<tbody class="text-sm divide-y">
+							{% for item in attendace.values %}
+							<tr style="text-align: center;">
+
+								{% for val in item.values %}
+								<td class="p-2 ">
+									<div class="items-center">
+										<div class="font-medium">
+											{% if val == "A" %}
+											<div style="display:flex; justify-content: center;align-items: center;">
+												<svg class="w-8 h-8 mr-2" xmlns="http://www.w3.org/2000/svg"
+													fill="currentColor" viewBox="0 0 512 512" stroke="currentColor"
+													style="align-items: center;">
+													<g
+														transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)">
+														<path d="M4063 4541 c-652 -433 -1484 -1232 -2174 -2091 -69 -85 -128 -156
+														-133 -158 -4 -2 -222 146 -484 330 -262 183 -494 341 -514 351 -62 31 -84 17
+														-276 -176 -158 -159 -172 -176 -172 -209 0 -41 -13 -21 242 -373 431 -597 920
+														-1309 1071 -1562 37 -62 79 -121 94 -133 35 -28 95 -27 126 3 13 12 77 112
+														142 222 428 725 1016 1606 1493 2235 402 529 748 928 1117 1287 l210 205 0 50
+														c0 42 -4 53 -28 74 l-28 24 -284 0 -283 0 -119 -79z m236 -269 c-731 -749
+														-1627 -1972 -2439 -3326 -72 -120 -85 -137 -94 -121 -6 10 -110 167 -232 349
+														-237 356 -495 726 -796 1141 l-188 260 87 83 c48 45 93 80 99 78 6 -2 234
+														-160 507 -350 460 -322 498 -346 537 -346 52 0 56 4 251 251 577 728 1285
+														1434 1906 1901 76 58 179 132 228 166 l90 62 94 0 94 0 -144 -148z" />
+													</g>
+												</svg>
+											</div>
+											{% elif val == "P" %}
+											-
+											{% else %}
+											{{val}}
+											{% endif %}
+										</div>
+									</div>
+								</td>
+								{% endfor %}
+							</tr>
+							{% endfor %}
+
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}
+
+	{% block script %}
+
+	<script>
+		var setup = () => {
+			var getTheme = () => {
+				if (window.localStorage.getItem('dark')) {
+					return JSON.parse(window.localStorage.getItem('dark'))
+				}
+
+				return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+			}
+
+			var setTheme = (value) => {
+				window.localStorage.setItem('dark', value)
+			}
+
+			var getColor = () => {
+				if (window.localStorage.getItem('color')) {
+					return window.localStorage.getItem('color')
+				}
+				return 'cyan'
+			}
+
+			var setColors = (color) => {
+				var root = document.documentElement
+				root.style.setProperty('--color-primary', `var(--color-${color})`)
+				root.style.setProperty('--color-primary-50', `var(--color-${color}-50)`)
+				root.style.setProperty('--color-primary-100', `var(--color-${color}-100)`)
+				root.style.setProperty('--color-primary-light', `var(--color-${color}-light)`)
+				root.style.setProperty('--color-primary-lighter', `var(--color-${color}-lighter)`)
+				root.style.setProperty('--color-primary-dark', `var(--color-${color}-dark)`)
+				root.style.setProperty('--color-primary-darker', `var(--color-${color}-darker)`)
+				this.selectedColor = color
+				window.localStorage.setItem('color', color)
+				//
+			}
+
+			return {
+				loading: true,
+				isDark: getTheme(),
+				toggleTheme() {
+					this.isDark = !this.isDark
+					setTheme(this.isDark)
+				},
+				setLightTheme() {
+					this.isDark = false
+					setTheme(this.isDark)
+				},
+				setDarkTheme() {
+					this.isDark = true
+					setTheme(this.isDark)
+				},
+				color: getColor(),
+				selectedColor: 'cyan',
+				setColors,
+				toggleSidbarMenu() {
+					this.isSidebarOpen = !this.isSidebarOpen
+				},
+				isSettingsPanelOpen: false,
+				openSettingsPanel() {
+					this.isSettingsPanelOpen = true
+					this.$nextTick(() => {
+						this.$refs.settingsPanel.focus()
+					})
+				},
+				isMobileSubMenuOpen: false,
+				openMobileSubMenu() {
+					this.isMobileSubMenuOpen = true
+					this.$nextTick(() => {
+						this.$refs.mobileSubMenu.focus()
+					})
+				},
+				isMobileMainMenuOpen: false,
+				openMobileMainMenu() {
+					this.isMobileMainMenuOpen = true
+					this.$nextTick(() => {
+						this.$refs.mobileMainMenu.focus()
+					})
+				},
+			}
+		}
+		var month = JSON.parse("{{month|escapejs}}")
+		document.getElementById("Filter-Month").value = month
+
+	</script>
+
+	{% endblock %}

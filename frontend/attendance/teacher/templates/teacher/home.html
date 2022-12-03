@@ -1,0 +1,291 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %} Teacher {% endblock %}
+
+{% block current_title %} Teacher {% endblock %}
+
+{% block isProfileOpen %}
+<div x-data="{ isActive: true, open: true}">
+	{% endblock %}
+
+
+	{% block content %}
+
+	<div class="mt-2">
+		<form action="" method="post" id="teacherIdForm">
+			{% csrf_token %}
+			<input type="text" id="teacherId" name="teacherId" class="text-gray-500" hidden>
+		</form>
+		<div class="grid grid-cols-1 p-4 space-y-8 lg:gap-8 lg:space-y-0 lg:grid-cols-1">
+			<div class="bg-white rounded-md dark:bg-darker">
+				<div class="items-center justify-between p-4 border-b dark:border-primary">
+					<div class="grid grid-cols-1 lg:gap-1 lg:space-y-0 lg:grid-cols-3 md:grid-cols-3">
+						<div class="w-5 bg-white rounded-md dark:bg-darker">
+							<h5 class="text-lg font-semibold text-gray-500 dark:text-light">
+								Teachers
+							</h5>
+						</div>
+						<div class="col-span-2 w-full rounded-md dark:bg-darker flex">
+
+							<form action="" method="post" class="w-full flex">
+								{% csrf_token %}
+								<input type="text"
+									class="w-full px-4 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+									placeholder="Name or Email" required name="filterTeacher" />
+								<button type="submit"
+									class="px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker">
+									<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+										viewBox="0 0 512 512" stroke="currentColor">
+										<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)">
+											<path d="M1858 5104 c-341 -50 -678 -192 -963 -408 -104 -78 -304 -278 -384
+										-384 -124 -164 -256 -409 -315 -583 -311 -929 47 -1926 877 -2442 662 -410
+										1535 -405 2188 14 l76 49 125 -128 c69 -70 352 -364 630 -653 574 -597 548
+										-575 688 -567 85 5 123 21 176 75 52 52 77 114 77 193 0 98 -24 142 -151 273
+										-420 434 -1132 1177 -1132 1182 0 3 22 33 49 68 164 209 291 471 362 746 159
+										614 28 1255 -363 1774 -78 104 -279 305 -386 386 -288 218 -618 355 -974 406
+										-130 19 -448 18 -580 -1z m502 -545 c308 -38 607 -184 844 -409 476 -455 606
+										-1146 327 -1745 -128 -273 -356 -519 -626 -674 -387 -222 -857 -259 -1282
+										-102 -626 231 -1040 879 -983 1540 13 146 33 241 77 371 214 634 830 1060
+										1493 1032 36 -1 103 -7 150 -13z" />
+										</g>
+									</svg>
+								</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="overflow-y-auto" style="height: 300px;">
+					<table class="table-auto w-full font-semibold text-gray-500 dark:text-light text-left">
+						<thead class="text-sm font-semib uppercase bg-primary text-white"
+							style="position: sticky; top: 0; z-index: 1;">
+							<tr style="text-align: left;">
+								<th class="p-2 " heigh="50px">
+									<div class="text-left">Name</div>
+								</th>
+
+								<th class="p-2 ">
+									<div class="text-left">
+										Email
+									</div>
+								</th>
+
+								<th class="p-2 ">
+									<div class="text-left">
+										View
+									</div>
+								</th>
+							</tr>
+						</thead>
+
+
+						<tbody class="text-sm divide-y">
+							<tr style="text-align: left;">
+								<td class="p-2">
+									<div class="flex items-center">
+										<div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
+											<img src="{% static 'img/test.jpg' %}" class="rounded-full" width="40"
+												height="40">
+										</div>
+										<div class="font-medium">Karan Shah</div>
+									</div>
+								</td>
+								<td class="p-2 ">
+									<div class="items-center">
+										<div class="font-medium">
+											shahkaran3062003@gmail.com
+										</div>
+									</div>
+								</td>
+
+								<td class="p-2 ">
+									<div class="items-center">
+										<div class="font-medium">
+											<button type="submit" @click="openTeacherPanel"
+												onclick="fillTeacherId(this.value)" value="id"
+												class=" items-center p-2 text-white trasition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary-dark bg-primary focus:outline-none focus:ring focus:ring-primary-dark focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+												View</button>
+										</div>
+									</div>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div x-show="isTeacherPanelOpen">
+
+		<div @click="isTeacherPanelOpen = false"
+			style="background-color: rgba(255, 255, 255, 0.5); position: absolute; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; z-index: 2; display: flex; justify-content: center; align-items: center;">
+		</div>
+
+		<div
+			style="display: flex; justify-content: center; align-items: center; top: 0; position: absolute; width: 100%; height: 100%; right: 0; bottom: 0;">
+			<div class="w-full max-w-sm rounded-md flex flex-col items-center justify-center p-4 space-y-2 antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"
+				style="z-index: 3;" @keydown.escape="isTeacherPanelOpen = false" x-ref="teacherPanel">
+
+				<div
+					class="flex flex-col items-center justify-center flex-shrink-0 px-4 py-4 border-b dark:border-primary-dark">
+					<h1 class="text-2xl font-semibold text-center py-2">Teacher Profile</h1>
+					<img src="{% static 'img/test.jpg' %}" class="w-24 h-24 rounded-full">
+					<h2 id="settinsPanelLabel" class="text-xl font-medium text-gray-500 dark:text-light">{{name}}</h2>
+				</div>
+				<form action="" method="post">
+					{% csrf_token %}
+					<div class="w-full max-w-sm px-4 py-4 space-y-2 rounded-md dark:bg-darker">
+
+						<input readonly hidden type="text" name="tid" required />
+						<input
+							class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+							type="text" name="name" placeholder="Name" required />
+
+						<input
+							class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+							type="text" name="address" placeholder="Address" required />
+						<input
+							class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+							type="text" name="mobile" placeholder="Number" required />
+						<input
+							class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+							type="email" name="email" placeholder="Email address" required />
+					</div>
+
+					<div
+						class="grid grid-cols-2 p-2 gap-8 lg:gap-8 md:gap-8 lg:space-y-0 lg:grid-cols-2 md:grid-cols-2">
+						<div class="col-span-1">
+							<button type="submit"
+								class="w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker">
+								Update
+							</button>
+						</div>
+						<div class="col-span-1">
+							<button type="submit"
+								class="w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker">
+								Delete
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	{% endblock %}
+
+	{% block script %}
+
+	<script>
+		var teacherDetails = JSON.parse("{{teacherDetails|escapejs}}")
+		var setup = () => {
+			var getTheme = () => {
+				if (window.localStorage.getItem('dark')) {
+					return JSON.parse(window.localStorage.getItem('dark'))
+				}
+
+				return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+			}
+
+			var setTheme = (value) => {
+				window.localStorage.setItem('dark', value)
+			}
+
+			var getColor = () => {
+				if (window.localStorage.getItem('color')) {
+					return window.localStorage.getItem('color')
+				}
+				return 'cyan'
+			}
+
+			var setColors = (color) => {
+				var root = document.documentElement
+				root.style.setProperty('--color-primary', `var(--color-${color})`)
+				root.style.setProperty('--color-primary-50', `var(--color-${color}-50)`)
+				root.style.setProperty('--color-primary-100', `var(--color-${color}-100)`)
+				root.style.setProperty('--color-primary-light', `var(--color-${color}-light)`)
+				root.style.setProperty('--color-primary-lighter', `var(--color-${color}-lighter)`)
+				root.style.setProperty('--color-primary-dark', `var(--color-${color}-dark)`)
+				root.style.setProperty('--color-primary-darker', `var(--color-${color}-darker)`)
+				this.selectedColor = color
+				window.localStorage.setItem('color', color)
+				//
+			}
+
+			return {
+				loading: true,
+				isDark: getTheme(),
+				toggleTheme() {
+					this.isDark = !this.isDark
+					setTheme(this.isDark)
+				},
+				setLightTheme() {
+					this.isDark = false
+					setTheme(this.isDark)
+				},
+				setDarkTheme() {
+					this.isDark = true
+					setTheme(this.isDark)
+				},
+				color: getColor(),
+				selectedColor: 'cyan',
+				setColors,
+				toggleSidbarMenu() {
+					this.isSidebarOpen = !this.isSidebarOpen
+				},
+				isSettingsPanelOpen: false,
+				openSettingsPanel() {
+					this.isSettingsPanelOpen = true
+					this.$nextTick(() => {
+						this.$refs.settingsPanel.focus()
+					})
+				},
+				isTeacherPanelOpen: teacherDetails.isTeacherPanelOpen === 'true',
+				openTeacherPanel() {
+					this.isTeacherPanelOpen = true; this.$nextTick(() => {
+						this.$refs.teacherPanel.focus()
+					})
+				},
+				isMobileSubMenuOpen: false,
+				openMobileSubMenu() {
+					this.isMobileSubMenuOpen = true
+					this.$nextTick(() => {
+						this.$refs.mobileSubMenu.focus()
+					})
+				},
+				isMobileMainMenuOpen: false,
+				openMobileMainMenu() {
+					this.isMobileMainMenuOpen = true
+					this.$nextTick(() => {
+						this.$refs.mobileMainMenu.focus()
+					})
+				},
+			}
+		}
+
+		function fillTeacherId(val) {
+			console.log("Working")
+			document.getElementsByName("teacherId")[0].value = val
+			document.getElementById("teacherIdForm").submit()
+		}
+
+		if (teacherDetails.isTeacherPanelOpen === 'true') {
+			for (const [key, val] of Object.entries(teacherDetails)) {
+				if (key === 'isTeacherPanelOpen') {
+					continue;
+				}
+				else {
+					document.getElementsByName(key)[0].value = val
+				}
+			}
+		}
+	</script>
+
+	{% endblock %}
