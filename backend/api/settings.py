@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'student.apps.StudentConfig',
     'teacher.apps.TeacherConfig',
-    'attendance.apps.AttendanceConfig'
+    'attendance.apps.AttendanceConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,9 @@ ROOT_URLCONF = 'api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
